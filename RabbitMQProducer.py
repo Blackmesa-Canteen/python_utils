@@ -15,8 +15,7 @@ def send_message(message, producer_id):
         pika.ConnectionParameters(
             host='localhost',
             port=5674,
-            username='john123',
-            password='123456'
+            credentials=pika.PlainCredentials('john123', '123456'),
         )
     )
     channel = connection.channel()

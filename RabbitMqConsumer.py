@@ -14,8 +14,7 @@ def receive_data(queue_name):
         pika.ConnectionParameters(
             host='b-d6c2e027-eebd-49a7-90b3-1c587949a894.mq.ca-central-1.amazonaws.com',
             port=5671,
-            username='user',
-
+            credentials=None,
         )
     )
 
