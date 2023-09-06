@@ -21,6 +21,7 @@ def receive_data(queue_name):
     ssl_context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
     ssl_context.set_ciphers('ECDHE+AESGCM:!ECDSA')
 
+    # please create a config.py in the project folder to declare the remote AWS MQ credentials
     url = f"amqps://{rabbitmq_user}:{rabbitmq_password}@{rabbitmq_broker_id}.mq.{region}.amazonaws.com:5671/{vhost}"
 
     parameters = pika.URLParameters(url)

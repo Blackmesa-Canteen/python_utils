@@ -3,6 +3,11 @@ import threading
 
 import pika
 
+rabbitmq_user = 'john123'
+rabbitmq_password = '123456'
+rabbitmq_host = 'localhost'
+rabbitmq_port = 5674
+vhost = 'demo-vhost'
 
 def send_message(message, producer_id):
     """
@@ -11,15 +16,14 @@ def send_message(message, producer_id):
     :param producer_id: id of the producer
     :return: None
     """
-    connection = pika.BlockingConnection(
-        pika.ConnectionParameters(
-            host='localhost',
-            port=5674,
-            credentials=pika.PlainCredentials('john123', '123456'),
-        )
-    )
+    url = f"amqp://{rabbitmq_user}:{rabbitmq_password}@{rabbitmq_host}:{rabbitmq_port}/{vhost}"
+
+    parameters = pika.URLParameters(url)
+
+    connection = pika.BlockingConnection(parameters)
+
     channel = connection.channel()
-    channel.queue_declare(queue='demo-queue')
+    # channel.queue_declare(queue='demo-queue')
 
     # Add a field to mark the producer id in JSON payload
     message_with_id = json.dumps({"producer_id": producer_id, "message": message})
